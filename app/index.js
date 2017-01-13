@@ -1,5 +1,20 @@
-import { Foo } from './component';
+import component from './component';
 
-const foo = new Foo();
+let demoComponent = component();
 
-document.body.appendChild(foo.testMethod());
+document.body.appendChild(demoComponent);
+
+// HMR interface -- this eliminates hard reload
+if(module.hot) {
+  // Capture hot update
+  module.hot.accept('./component', () => {
+    // We have to go through CommonJS here and capture the
+    // default export explicitly!
+    const nextComponent = require('./component').default();
+
+    // Replace old content with the hot loaded one
+    document.body.replaceChild(nextComponent, demoComponent);
+
+    demoComponent = nextComponent;
+  });
+}
