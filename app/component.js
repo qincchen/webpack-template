@@ -10,7 +10,7 @@ export class Foo {
 
 }
 
-export default function () {
+export default function() {
   const div = document.createElement('div');
 
   const h1 = document.createElement('h1');

@@ -23,10 +23,21 @@ const config = {
       title: 'Webpack template'
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.WatchIgnorePlugin([
       path.join(__dirname, 'node_modules')
-    ])
+    ]),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        eslint: {
+          formatter: require("eslint-friendly-formatter")
+        }
+      }
+    })
   ],
+
+  // devtool: "source-map", // production
+  devtool: "eval-source-map",
 
   devServer: {
     historyApiFallback: true,
@@ -44,11 +55,23 @@ const config = {
 
   performance: {
     hints: false
-  }
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        // include: PATHS.app,
+        enforce: 'pre', // preloaders
+        use: 'eslint-loader'
+      }
+    ]
+  },
 
 };
 
 export default (env) => {
 
   return config;
-}
+};
