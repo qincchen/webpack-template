@@ -1,25 +1,20 @@
-export class Foo {
+import React from 'react';
+import _ from 'lodash';
 
-  testMethod() {
-    const element = document.createElement('h1');
+export class TestComponent extends React.Component {
 
-    element.innerHTML = 'Hello world';
+  render() {
 
-    return element;
+    const list = _.map([1, 2, 3], (n) => {
+      return <li key={n}>{n}</li>;
+    });
+
+    return <div>
+      <h1>Hello World</h1>
+      <ul>
+        {list}
+      </ul>
+      <input type="text"/>
+    </div>;
   }
-
-}
-
-export default function() {
-  const div = document.createElement('div');
-
-  const h1 = document.createElement('h1');
-  h1.innerHTML = 'Hello world';
-
-  const input = document.createElement('input');
-
-  div.appendChild(h1);
-  div.appendChild(input);
-
-  return div;
 }

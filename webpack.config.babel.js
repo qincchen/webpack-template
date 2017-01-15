@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackTemplate from 'html-webpack-template';
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -19,14 +20,23 @@ const config = {
   },
 
   plugins: [
+
     new HtmlWebpackPlugin({
-      title: 'Webpack template'
+      title: 'Webpack template',
+      template: HtmlWebpackTemplate,
+      appMountId: 'root',
+      mobile: true,
+      inject: false
     }),
+
     new webpack.HotModuleReplacementPlugin(),
+
     new webpack.NamedModulesPlugin(),
+
     new webpack.WatchIgnorePlugin([
       path.join(__dirname, 'node_modules')
     ]),
+
     new webpack.LoaderOptionsPlugin({
       options: {
         eslint: {
@@ -59,6 +69,14 @@ const config = {
 
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          'react-hot-loader',
+          'babel-loader'
+        ]
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
