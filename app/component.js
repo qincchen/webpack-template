@@ -9,7 +9,7 @@ export class TestComponent extends React.Component {
       return <li key={n}>{n}</li>;
     });
 
-    return <div>
+    return <div className="style">
       <h1>Hello World</h1>
       <ul>
         {list}

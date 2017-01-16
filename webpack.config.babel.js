@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import HtmlWebpackTemplate from 'html-webpack-template';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
@@ -16,7 +17,8 @@ const config = {
 
   output: {
     path: PATHS.build,
-    filename: '[name].js'
+    filename: '[name].js',
+    // sourceMapFilename: '[file].map'
   },
 
   plugins: [
@@ -37,17 +39,16 @@ const config = {
       path.join(__dirname, 'node_modules')
     ]),
 
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        eslint: {
-          formatter: require("eslint-friendly-formatter")
-        }
-      }
-    })
-  ],
+    // new webpack.LoaderOptionsPlugin({
+    //   options: {
+    //     eslint: {
+    //       formatter: require("eslint-friendly-formatter")
+    //     }
+    //   }
+    // }),
 
-  // devtool: "source-map", // production
-  devtool: "eval-source-map",
+    // new ExtractTextPlugin("style.css")
+  ],
 
   devServer: {
     historyApiFallback: true,
@@ -82,10 +83,65 @@ const config = {
         exclude: /node_modules/,
         // include: PATHS.app,
         enforce: 'pre', // preloaders
-        use: 'eslint-loader'
+        loader: 'eslint-loader',
+        options: {
+          formatter: require("eslint-friendly-formatter")
+        }
+      },
+      {
+        test: /\.scss$/,
+
+        // loader: ExtractTextPlugin.extract({
+        //   loader: './node_modules/css-loader?sourceMap!./node_modules/sass-loader?sourceMap'
+        // }),
+
+        // loader: ExtractTextPlugin.extract({
+        //   fallbackLoader: {
+        //     loader: 'style-loader',
+        //     query: {
+        //       sourceMap: true
+        //     }
+        //   },
+        //   loader: [
+        //     {
+        //       loader: 'css-loader',
+        //       query: {
+        //         sourceMap: true
+        //       }
+        //     },
+        //     {
+        //       loader: 'sass-loader',
+        //       query: {
+        //         sourceMap: true
+        //       }
+        //     }
+        //   ]
+        // })
+
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            query: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader',
+            query: {
+              sourceMap: true
+            }
+          }
+        ]
       }
     ]
   },
+
+  // devtool: 'source-map', // production
+  devtool: 'eval-source-map',
+  // devtool: 'module-inline-source-map'
 
 };
 
