@@ -1,11 +1,11 @@
 import React from 'react';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 export class TestComponent extends React.Component {
 
   render() {
 
-    const list = _.map([1, 2, 3], (n) => {
+    const list = [1, 2, 3].map((n) => {
       return <li key={n}>{n}</li>;
     });
 
@@ -17,4 +17,12 @@ export class TestComponent extends React.Component {
       <input type="text"/>
     </div>;
   }
+}
+
+export class ClassToTreeShake {
+
+  someMethod() {
+    return 'is tree shake working?';
+  }
+
 }
