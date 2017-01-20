@@ -5,9 +5,6 @@ import HtmlWebpackTemplate from 'html-webpack-template';
 import StyleLint from 'stylelint';
 
 export const lintCss = () => {
-  const rules = {
-    'color-hex-case': 'lower',
-  };
 
   return {
     module: {
@@ -22,7 +19,7 @@ export const lintCss = () => {
             plugins: function () {
               return [
                 StyleLint({
-                  rules: rules,
+                  // rules: rules,
                   // Ignore node_modules CSS
                   ignoreFiles: 'node_modules/**/*.css',
                 }),
