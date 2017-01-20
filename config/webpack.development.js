@@ -61,6 +61,7 @@ export default (options) => {
 
   return merge(
     common(options),
+    parts.lintCss(),
     parts.loadScss(),
     config
   );

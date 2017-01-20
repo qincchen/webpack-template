@@ -2,6 +2,38 @@ import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import HtmlWebpackTemplate from 'html-webpack-template';
+import StyleLint from 'stylelint';
+
+export const lintCss = () => {
+  const rules = {
+    'color-hex-case': 'lower',
+  };
+
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.css$|\.scss$/,
+          enforce: 'pre',
+
+          loader: 'postcss-loader',
+          options: {
+            ident: 'postcss',
+            plugins: function () {
+              return [
+                StyleLint({
+                  rules: rules,
+                  // Ignore node_modules CSS
+                  ignoreFiles: 'node_modules/**/*.css',
+                }),
+              ];
+            },
+          },
+        },
+      ],
+    },
+  };
+};
 
 export const extractBundles = (bundles, options) => {
   const entry = {};
