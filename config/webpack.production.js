@@ -42,9 +42,11 @@ export default (options) => {
       },
     }),
 
+    new webpack.HashedModuleIdsPlugin(),
+
     useSourceMap ? new webpack.SourceMapDevToolPlugin({
       append: `\n//# sourceMappingURL=[url]`
-    }) : null,
+    }) : null
 
   ];
 
@@ -56,8 +58,7 @@ export default (options) => {
 
     output: {
       path: build,
-      filename: '[name].[hash].js',
-      // sourceMapFilename: '[file].map'
+      filename: '[name].[chunkhash].js'
     },
 
     performance: {
@@ -68,12 +69,28 @@ export default (options) => {
 
     // devtool: useSourceMap ? 'source-map' : ''
 
-    bail: true
+    // bail: true
 
   };
 
   return merge(
     common(options),
+    parts.extractBundles([
+      {
+        name: 'vendor',
+        entries: [
+          'react',
+          'react-dom',
+          'lodash'
+        ],
+      },
+
+      // extract the manifest to prevent to stop new chunkhash
+      // being generated for vendor bundle everytime app code changes
+      {
+        name: 'manifest',
+      },
+    ]),
     parts.buildScss({
       useSourceMap
     }),

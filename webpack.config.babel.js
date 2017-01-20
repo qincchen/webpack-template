@@ -29,7 +29,7 @@ export default (env) => {
     case 'prod':
     case 'production': {
       const prod = prodConfig(prodOpt);
-      console.log(JSON.stringify(prod, null, 2));
+      // console.log(JSON.stringify(prod, null, 2));
 
       return prod;
     }

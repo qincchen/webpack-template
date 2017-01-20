@@ -1,6 +1,33 @@
+import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import HtmlWebpackTemplate from 'html-webpack-template';
+
+export const extractBundles = (bundles, options) => {
+  const entry = {};
+  const names = [];
+
+  // Set up entries and names.
+  bundles.forEach(({name, entries}) => {
+    if (entries) {
+      entry[name] = entries;
+    }
+
+    names.push(name);
+  });
+
+  return {
+    // Define an entry point needed for splitting.
+    entry,
+    plugins: [
+      // Extract bundles.
+      new webpack.optimize.CommonsChunkPlugin({
+        ...options,
+        names
+      })
+    ]
+  };
+};
 
 const commonHtmlWebpackPlugin = {
   title: 'Webpack template',
@@ -78,7 +105,7 @@ export const buildScss = ({
     },
 
     plugins: [
-      new ExtractTextPlugin('[name].[hash].css')
+      new ExtractTextPlugin('[name].[contenthash].css')
     ]
 
   };
