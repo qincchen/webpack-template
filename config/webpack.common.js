@@ -16,7 +16,6 @@ export default ({
           test: /\.js$/,
           exclude: /node_modules/,
           use: [
-            'react-hot-loader',
             'babel-loader'
           ]
         },

@@ -2,9 +2,10 @@ NOTE:
   LoaderOptionsPlugin prevents query parameter from working with
   css-loader and sass-loader
 
+PROBLEM:
+  tree shaking does not work right now https://github.com/webpack/webpack/issues/2867
+
 TODO:
-  manifest.js
-  manifest.json
   enable tree shaking, or gain visibility
   stage build
   dark canary build

@@ -15,9 +15,10 @@ export default (options) => {
 
   const config = {
 
-    entry: {
-      app: app
-    },
+    entry: [
+     'react-hot-loader/patch',
+      app
+    ],
 
     output: {
       path: build,
