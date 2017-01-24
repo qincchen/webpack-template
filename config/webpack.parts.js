@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import HtmlWebpackTemplate from 'html-webpack-template';
-import StyleLint from 'stylelint';
+import styleLint from 'stylelint';
 
 export const lintCss = () => {
 
@@ -16,19 +16,19 @@ export const lintCss = () => {
           loader: 'postcss-loader',
           options: {
             ident: 'postcss',
-            plugins: function () {
+            plugins: () => {
               return [
-                StyleLint({
+                styleLint({
                   // rules: rules,
                   // Ignore node_modules CSS
-                  ignoreFiles: 'node_modules/**/*.css',
-                }),
+                  ignoreFiles: 'node_modules/**/*.css'
+                })
               ];
-            },
-          },
-        },
-      ],
-    },
+            }
+          }
+        }
+      ]
+    }
   };
 };
 
@@ -169,5 +169,5 @@ export const loadScss = () => {
       ]
     }
 
-  }
+  };
 };

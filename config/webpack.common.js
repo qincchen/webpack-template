@@ -20,12 +20,19 @@ export default ({
           ]
         },
         {
+          test: /\.json$/,
+          exclude: /node_modules/,
+          use: [
+            'json-loader'
+          ]
+        },
+        {
           test: /\.js$/,
           exclude: /node_modules/,
           enforce: 'pre', // preloaders
           loader: 'eslint-loader',
           options: {
-            formatter: require("eslint-friendly-formatter")
+            formatter: require('eslint-friendly-formatter')
           }
         }
       ]

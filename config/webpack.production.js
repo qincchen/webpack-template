@@ -62,7 +62,7 @@ export default (options) => {
     },
 
     performance: {
-      hints: "warning"
+      hints: 'warning'
     },
 
     plugins: _.compact(plugins),
@@ -96,4 +96,4 @@ export default (options) => {
     }),
     config
   );
-}
+};
